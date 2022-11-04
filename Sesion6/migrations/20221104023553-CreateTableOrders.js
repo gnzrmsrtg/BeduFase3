@@ -3,9 +3,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('reviews', {
-      id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-      content: Sequelize.TEXT,
+    await queryInterface.createTable('orders', {
+      id: { 
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true 
+      },
       productId: {
         type: Sequelize.INTEGER,
         references: {
@@ -14,12 +17,21 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      quantity: Sequelize.INTEGER,
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     })
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('reviews')
+    await queryInterface.dropTable('orders')
   }
 };
